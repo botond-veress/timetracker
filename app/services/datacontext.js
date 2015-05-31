@@ -41,6 +41,17 @@
             }
         };
 
+        var management = {
+            getClients: function () {
+                console.info('[API] GET /management/clients');
+                return dummy([
+                    { id: 1, name: 'Jet' },
+                    { id: 2, name: 'TriggerMail' },
+                    { id: 3, name: 'Maurice Lacroix' }
+                ], false, 2000);
+            }
+        };
+
         function dummy(data, reject, timeout) {
             var defer = new $.Deferred();
 
@@ -58,7 +69,8 @@
         }
 
         var datacontext = {
-            account: account
+            account: account,
+            management: management
         };
 
         return datacontext;

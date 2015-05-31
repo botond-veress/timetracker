@@ -10,6 +10,7 @@
             self.moduleId = options.moduleId;
             self.title = options.title;
             self.nav = options.nav;
+            self.hash = options.hash || null;
             self.visible = options.visible;
 
         }
@@ -30,7 +31,7 @@
             time: new Route({ route: 'time', moduleId: 'viewmodels/time', title: 'Personal Time Management', nav: true }),
             team: {
                 index: new Route({ route: 'team', moduleId: 'viewmodels/team', title: 'Team Management', nav: true }),
-                add: new Route({ route: 'team', moduleId: 'viewmodels/team', title: 'Team Management', nav: true })
+                add: new Route({ route: 'team/client(/:id)', moduleId: 'viewmodels/team', hash: '#team/client', title: 'Team Management', nav: true })
             }
         };
 

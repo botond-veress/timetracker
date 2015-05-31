@@ -1,5 +1,5 @@
-﻿define(['managers/navigationManager'],
-	function (navigationManager) {
+﻿define(['services/datacontext', 'managers/navigationManager'],
+	function (datacontext, navigationManager) {
 
 	    function listClientItem(options) {
 
@@ -7,14 +7,15 @@
 
 	        var self = this;
 
+	        self.id = assignVariable(options.id || 0);
 	        self.name = assignVariable(options.name || 'Undefined client');
+	        self.hash = assignVariable(options.hash || null);
 
 	    }
 
 	    function listClient(options) {
 
 	        options = options || {};
-	        options.list = [new listClientItem({ name: 'Jet' }), new listClientItem({ name: 'TriggerMail' }), new listClientItem({ name: 'Maurice Lacroix' })];
 
 	        var self = this;
 
@@ -30,13 +31,26 @@
 	    entity.loading = ko.observable(false);
 
 	    function activate() {
+	        entity.loading(true);
+	        datacontext.management.getClients()
+                .then(function (data) {
+                    entity(new listClient({
+                        list: data.map(function (current) {
+                            return new listClientItem(current);
+                        })
+                    }));
+                })
+                .always(function () {
+                    entity.loading(false);
+                });
+
 	        return true;
 	    }
 
 	    var vm = {
 	        activate: activate,
 	        entity: entity,
-            hash: hash
+	        hash: hash
 	    };
 
 	    return vm;
