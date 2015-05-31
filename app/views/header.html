@@ -1,0 +1,10 @@
+﻿<header id="header" data-bind="css: { visible: navigationManager.claim.isAuthorized }">
+    LOGO
+    <div class="header-navigation" data-bind="foreach: navigationManager.router.navigationModel">
+        <a href="#" class="header-navigation-item" data-bind="text: title, attr: { href: hash }, css: { active: isActive }"></a>
+    </div>
+    <div class="header-user">
+        <span class="header-user-name" data-bind="text: navigationManager.claim().display"></span>
+        <a href="#" class="header-user-signout" data-bind="click: signout">Sign out</a>
+    </div>
+</header>

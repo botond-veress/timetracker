@@ -1,0 +1,42 @@
+﻿<script type="text/html" id="validation-message-template">
+    <span class="error message visible" data-bind="validationMessageCache: field"></span>
+</script>
+
+<script type="text/html" id="text-control-template">
+    <div class="control text" data-bind="css: css">
+        <input class="value" data-bind="value: value, valueUpdate: update(), attr: { placeholder: placeholder, readonly: readonly, type: type }" />
+        <div class="label" data-bind="text: label"></div>
+        <div class="template" data-bind="template: { if: template.src, name: template.src, data: template.params }"></div>
+    </div>
+</script>
+
+<script type="text/html" id="max-text-control-template">
+    <div class="control text required">
+        <input class="value" data-bind="value: value, valueUpdate: update(), attr: { placeholder: placeholder, readonly: readonly, type: type }" />
+        <div class="label" data-bind="text: label"></div>
+        <div class="hint" data-bind="with: character">
+            <span class="current" data-bind="text: current"></span>
+            <span class="max" data-bind="text: character.max"></span>
+            <span class="unit" data-bind="text: character.unit"></span>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="checkbox-control-template">
+    <div class="control checkbox label hint required" data-bind="css: { disabled: readonly }">
+        <label class="item">
+            <input class="value" data-bind="checked: value, attr: { type: type }" />
+            <span class="icon"></span>
+            <span class="text" data-bind="text: label"></span>
+        </label>
+    </div>
+</script>
+
+<script type="text/html" id="forgot-password-template">
+    <div class="forgot-password">
+        <div class="forgot-password-sign">?</div>
+        <div class="tooltip">
+            Recover your password <a href="#" class="link" data-bind="attr: { href: recover }">here</a>.
+        </div>
+    </div>
+</script>

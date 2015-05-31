@@ -1,0 +1,19 @@
+﻿<div id="login" class="window-container">
+    <div class="content">
+        <div class="window">
+            <div class="window-title">Track your time</div>
+            <div class="window-content">
+                <form role="form" class="form" data-bind="validate: { submit: submit, entity: entity }, with: entity" autocomplete="off" spellcheck="false" novalidate>
+                    <!-- ko template: { name: 'text-control-template', data: email } --><!-- /ko -->
+                    <!-- ko template: { name: 'text-control-template', data: password } --><!-- /ko -->
+                    <!-- ko template: { name: 'checkbox-control-template', data: remember } --><!-- /ko -->
+                    <button type="submit" class="control spacious button button-large button-block button-primary" data-loading-text="Signing in...">Sign in</button>
+                </form>
+            </div>
+            <div class="loader-overlay" data-bind="css: { loading: entity.loading }"></div>
+        </div>
+        <div class="window-link" data-bind="with: hash">
+            <a href="#" class="link" data-bind="attr: { href: register }">Join us</a> now.
+        </div>
+    </div>
+</div>

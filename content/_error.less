@@ -1,0 +1,130 @@
+﻿@import (reference) '_theme.less';
+@import (reference) '_core.less';
+
+#error {
+    position: relative;
+    padding: 20px;
+    height: 100%;
+    line-height: normal;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    > .content {
+        position: relative;
+        max-width: 455px;
+        width: 100%;
+        margin: 20px 0;
+        padding: 20px 20px 0;
+        box-shadow: 0 0 15px fade(#000, 10%);
+        .clearfix;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+
+        .rectangle {
+            position: relative;
+            .aspect-ratio(455, 374);
+
+            .error-image {
+                .stretch;
+                background: url(images/error.jpg) no-repeat;
+                background-size: cover;
+
+                .title {
+                    font-size: 18px;
+                    font-weight: 700;
+                    color: #dd4949;
+                    text-align: center;
+                    margin-top: 20px;
+                    padding: 0 20px;
+                }
+
+                .message {
+                    display: none;
+                    position: absolute;
+                    max-width: 140px;
+                    padding: 20px 20px;
+                    border-radius: 15px;
+                    font-size: 18px;
+                    color: #fff;
+                    background: #dd4949;
+                    z-index: 0;
+                    top: 50%;
+                    left: 50%;
+                    -moz-transform: translateY(-50%);
+                    -ms-transform: translateY(-50%);
+                    -o-transform: translateY(-50%);
+                    -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+
+                    &:before {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        height: 17px;
+                        left: -17px;
+                        width: 50%;
+                        bottom: 0;
+                        background-image: radial-gradient(circle at 0 0, transparent 17px, #dd4949 17px);
+                    }
+                }
+            }
+        }
+
+        .status-title,
+        .status-code {
+            float: left;
+            line-height: 70px;
+            color: #dd4949;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .status-title {
+            width: 70%;
+            font-size: 18px;
+        }
+
+        .status-code {
+            width: 30%;
+            font-size: 28px;
+            font-weight: 800;
+            text-align: right;
+        }
+    }
+
+    @media only screen and (min-width: @tablet-screen-size) {
+        > .content {
+            .rectangle {
+                .error-image {
+                    .title {
+                        font-size: 22px;
+                    }
+
+                    .message {
+                        display: block;
+                    }
+                }
+            }
+
+            .status-title,
+            .status-code {
+                line-height: 100px;
+            }
+
+            .status-title {
+                width: 60%;
+                padding-left: 40px;
+                font-size: 28px;
+            }
+
+            .status-code {
+                width: 40%;
+                padding-right: 40px;
+                font-size: 48px;
+            }
+        }
+    }
+}

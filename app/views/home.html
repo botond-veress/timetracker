@@ -1,0 +1,83 @@
+﻿<div id="calendar" data-bind="with: entity">
+    <div class="calendar" data-bind="with: calendar">
+        <div class="calendar-navigation">
+            <div class="calendar-navigation-item calendar-navigation-previous" data-bind="text: previous.month, click: selectPreviousMonth"></div>
+            <div class="calendar-navigation-item calendar-navigation-current">
+                <span data-bind="text: current.month"></span>,
+                <span data-bind="text: current.year"></span>
+            </div>
+            <div class="calendar-navigation-item calendar-navigation-next" data-bind="text: next.month, click: selectNextMonth"></div>
+        </div>
+        <div class="calendar-heading" data-bind="foreach: weekdays">
+            <div class="calendar-heading-day" data-bind="text: $data"></div>
+        </div>
+        <div class="calendar-content" data-bind="foreach: days">
+            <div class="calendar-content-item">
+                <div class="calendar-day" data-bind="click: $parent.select, css: { current: current, active: active, selected: selected, muted: muted, filled: filled, instant: $parent.selected.internal }">
+                    <span class="calendar-day-number" data-bind="text: date.day"></span>
+                </div>
+            </div>
+        </div>
+        <div class="calendar-detail" data-bind="css: { visible: selected, overlay: selected.overlay }">
+            <div class="calendar-detail-content" data-bind="with: selected.safe">
+                <div class="calendar-detail-time">
+                    <div class="calendar-detail-weekday">
+                        <div class="calendar-detail-navigation-previous" data-bind="click: $parent.previousDay">
+                            <i class="icon-chevron-left"></i>
+                        </div>
+                        <span data-bind="text: date.weekday"></span>
+                        <div class="calendar-detail-navigation-next" data-bind="click: $parent.nextDay">
+                            <i class="icon-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="calendar-detail-day" data-bind="text: date.day"></div>
+                    <div class="calendar-detail-total">
+                        <span class="calendar-detail-work-hours">Worked &#8212; </span><span data-bind="text: $parent.projects.total"></span>h
+                    </div>
+                </div>
+                <div class="calendar-detail-timesheet" data-bind="css: { loading: $parent.projects.loading }">
+                    <div class="close" data-bind="click: $parent.deselect">&times;</div>
+                    <div class="loading-line loading-verbose" title="Loading..."></div>
+                    <div class="calendar-project-content">
+                        <a href="#" class="calendar-action-link calendar-project-add">Add project</a>
+                        <div class="calendar-project-container" data-bind="foreach: $parent.projects">
+                            <div class="calendar-project">
+                                <div class="calendar-project-name">
+                                    <span data-bind="text: client"></span> - <span data-bind="text: name"></span>
+                                </div>
+                                <div class="calendar-project-detail">
+                                    <div class="calendar-project-hours">
+                                        <a href="#" class="calendar-action-link" data-bind="click: toggleWorkHours, css: { simple: hours }">
+                                            <span data-bind="hidden: hours">Add work hours</span>
+                                            <span class="calendar-project-hours-work" data-bind="text: hours, visible: hours"></span>
+                                            <span class="calendar-project-hours-overtime" data-bind="text: overtime, visible: overtime"></span>
+                                        </a>
+                                        <div class="calendar-tooltip" data-bind="css: { visible: areWorkHoursShown }">
+                                            <div class="calendar-tooltip-title">Project work hours</div>
+                                            <div class="calendar-tooltip-content">
+                                                I've worked
+                                                <input type="text" placeholder="0" class="calendar-input" data-bind="textInput: hours.temp" />
+                                                hours and an extra
+                                                <input type="text" placeholder="0" class="calendar-input" data-bind="textInput: overtime.temp" />
+                                                hours overtime.
+                                            </div>
+                                            <div class="calendar-tooltip-footer">
+                                                <a href="#" class="calendar-action-link simple" data-bind="click: toggleWorkHours">Cancel</a>
+                                                <a href="#" class="calendar-action-link" data-bind="click: saveWorkHours">OK</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="calendar-action-link calendar-project-message" data-bind="css: { simple: message }">
+                                        <span data-bind="hidden: message">Add message</span>
+                                        <span data-bind="text: message, visible: message"></span>
+                                    </a>
+                                    <a href="#" class="calendar-action-link calendar-project-remove">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,212 @@
+﻿@import (reference) '_theme.less';
+
+.stretch-custom(@value) {
+    position: absolute;
+    top: @value;
+    left: @value;
+    right: @value;
+    bottom: @value;
+}
+
+.stretch {
+    .stretch-custom(0px);
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-selection-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.text-selection-normal {
+    -webkit-touch-callout: initial;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.vertical-align {
+    height: 100%;
+    text-align: center;
+    white-space: nowrap;
+    .text-selection-none;
+
+    .align-middle() {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    &:before {
+        content: '';
+        width: 0;
+        height: 100%;
+        margin-left: -0.25em;
+        .align-middle;
+    }
+
+    > .content {
+        position: relative;
+        white-space: normal;
+        text-align: left;
+        .align-middle;
+        .text-selection-normal;
+    }
+}
+
+.clearfix {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+
+    zoom: 1;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+.scrollable {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.aspect-ratio(@w, @h) {
+    @ratio: @w / @h;
+    padding-bottom: 100% / @ratio;
+}
+
+.transition(@type: all) {
+    -moz-transition: @type 0.35s ease-in-out;
+    -o-transition: @type 0.35s ease-in-out;
+    -webkit-transition: @type 0.35s ease-in-out;
+    transition: @type 0.35s ease-in-out;
+}
+
+.max-width(@width: 800px) {
+    max-width: @width;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.relative {
+    position: relative;
+}
+
+.row {
+    position: relative;
+    .clearfix;
+}
+
+[class^="column-"], [class*="column-"] {
+    position: relative;
+    float: left;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    min-height: 1px;
+    width: 100%;
+}
+
+.column(@size, @count, @index) when (@index > 0) {
+    @className: ~"column-@{size}-@{index}";
+
+    &.@{className} {
+        width: (100% / @count) * @index;
+    }
+
+    .column(@size, @count, @index - 1);
+}
+
+.offset(@size, @count, @index) when (@index > 0) {
+    @className: ~"offset-@{size}-@{index}";
+
+    &.@{className} {
+        margin-left: (100% / @count) * @index;
+    }
+
+    .offset(@size, @count, @index - 1);
+}
+
+.hidden(@size) {
+    @className: ~"hidden-@{size}";
+
+    &.@{className} {
+        display: none;
+        visibility: hidden;
+    }
+}
+
+@media only screen and (min-width: @mobile-screen-size) {
+    .column('mobile', @column-count, @column-count);
+    .offset('mobile', @column-count, @column-count);
+    .hidden('mobile');
+}
+
+@media only screen and (min-width: @tablet-screen-size) {
+    .column('tablet', @column-count, @column-count);
+    .offset('tablet', @column-count, @column-count);
+    .hidden('tablet');
+}
+
+@media only screen and (min-width: @desktop-screen-size) {
+    .column('desktop', @column-count, @column-count);
+    .offset('desktop', @column-count, @column-count);
+    .hidden('desktop');
+}
+
+.delay(@index, @interval, @base: 0) when (@index > 0) {
+    @selector: ~":nth-child(@{index})";
+
+    .delay(@index - 1, @interval, @base);
+
+    &@{selector} {
+        -moz-transition-delay: @base + @index * @interval;
+        -o-transition-delay: @base + @index * @interval;
+        -webkit-transition-delay: @base + @index * @interval;
+        transition-delay: @base + @index * @interval;
+    }
+}
+
+.fit {
+    max-width: @content-width-normal;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    &.small {
+        max-width: @content-width-small;
+    }
+
+    &.medium {
+        max-width: @content-width-medium;
+    }
+
+    .fit {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

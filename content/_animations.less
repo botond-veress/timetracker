@@ -1,0 +1,81 @@
+﻿.scale(@value) {
+    -moz-transform: scale(@value);
+    -ms-transform: scale(@value);
+    -o-transform: scale(@value);
+    -webkit-transform: scale(@value);
+    transform: scale(@value);
+}
+
+.transform(@value) {
+    -moz-transform: @value;
+    -ms-transform: @value;
+    -o-transform: @value;
+    -webkit-transform: @value;
+    transform: @value;
+}
+
+@-moz-keyframes fade-scale {
+	0% { opacity: 0; .scale(0); }
+	100% { opacity: 1; .scale(1); }
+}
+
+@-webkit-keyframes fade-scale {
+	0% { opacity: 0; .scale(0); }
+	100% { opacity: 1; .scale(1); }
+}
+
+@keyframes fade-scale {
+	0% { opacity: 0; .scale(0); }
+	100% { opacity: 1; .scale(1); }
+}
+
+@-moz-keyframes ripple {
+    100% { opacity: 0; .transform(scale(2.5)); }
+}
+
+@-webkit-keyframes ripple {
+    100% { opacity: 0; .transform(scale(2.5)); }
+}
+
+@keyframes ripple {
+    100% { opacity: 0; .transform(scale(2.5)); }
+}
+
+@-webkit-keyframes loading {
+    0% { opacity: 1; width: 0; }
+    80% { width: 100%; opacity: 1; }
+    99% { width: 100%; opacity: 0; }
+    100% { width: 0; }
+}
+
+@-moz-keyframes loading {
+    0% { opacity: 1; width: 0; }
+    80% { width: 100%; opacity: 1; }
+    99% { width: 100%; opacity: 0; }
+    100% { width: 0; }
+}
+
+@keyframes loading {
+    0% { opacity: 1; width: 0; }
+    80% { width: 100%; opacity: 1; }
+    99% { width: 100%; opacity: 0; }
+    100% { width: 0; }
+}
+
+@-webkit-keyframes loading-line {
+    0% { width: 5%; left: 0; }
+    50% { width: 30%; }
+    100% { width: 5%; left: 100%; }
+}
+
+@-moz-keyframes loading-line {
+    0% { width: 5%; left: 0; }
+    50% { width: 30%; }
+    100% { width: 5%; left: 100%; }
+}
+
+@keyframes loading-line {
+    0% { width: 5%; left: 0; }
+    50% { width: 30%; }
+    100% { width: 5%; left: 100%; }
+}

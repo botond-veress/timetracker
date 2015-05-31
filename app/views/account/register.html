@@ -1,0 +1,20 @@
+﻿<div id="login" class="window-container">
+    <div class="content">
+        <div class="window">
+            <div class="window-title">Create an account</div>
+            <div class="window-content">
+                <form role="form" class="form" data-bind="validate: { submit: submit, entity: entity }, with: entity" autocomplete="off" spellcheck="false" novalidate>
+                    <!-- ko template: { name: 'text-control-template', data: email } --><!-- /ko -->
+                    <!-- ko template: { name: 'text-control-template', data: first } --><!-- /ko -->
+                    <!-- ko template: { name: 'text-control-template', data: last } --><!-- /ko -->
+                    <!-- ko template: { name: 'text-control-template', data: password } --><!-- /ko -->
+                    <button type="submit" class="control spacious button button-large button-block button-primary" data-loading-text="Sending email...">Create</button>
+                </form>
+            </div>
+            <div class="loader-overlay" data-bind="css: { loading: entity.loading }"></div>
+        </div>
+        <div class="window-link" data-bind="with: hash">
+            You can sign in <a href="#login" class="link" data-bind="attr: { href: login }">here</a>.
+        </div>
+    </div>
+</div>

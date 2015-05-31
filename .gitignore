@@ -1,0 +1,7 @@
+[Bb]uild/
+[Bb]in/
+[Oo]bj/
+[Nn]ode_modules/
+*.csproj
+*sln
+WebEssentials-Settings.json
