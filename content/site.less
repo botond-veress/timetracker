@@ -62,61 +62,83 @@ a {
 .page {
     max-width: 900px;
     margin: 0 auto;
+    padding: 0 10px;
 
     .page-title {
+        position: relative;
         margin-bottom: 1em;
         font-size: 2em;
+        line-height: 2em;
         color: #fff;
+
+        .page-links {
+            font-size: 0.5em;
+            text-align: right;
+
+            .link {
+                position: relative;
+                padding: 0 5px;
+                margin-left: 5px;
+
+                &:not(:first-child) {
+                    &:before {
+                        content: '|';
+                        position: absolute;
+                        right: 100%;
+                        color: fade(#fff, 90%);
+                        opacity: 0.2;
+                    }
+                }
+            }
+        }
     }
 
     .page-content {
         .clearfix;
 
+        .button {
+            &.spacious {
+                margin-bottom: 20px;
+            }
+        }
+
         .list-item {
-            @list-item-width: 150px;
-            @list-item-height: 150px;
-            @list-item-spacing: 5px;
             position: relative;
             float: left;
             display: block;
-            width: @list-item-width - @list-item-spacing * 2;
-            height: @list-item-height - @list-item-spacing * 2;
-            margin: @list-item-spacing;
-            color: @color-primary-foreground;
-            background: @color-primary-background;
-            border-radius: 3px;
-            -moz-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
-            -o-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
-            -webkit-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
-            transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+            /*width: 25%;*/
             -moz-animation: grow-fade-in 0.5s ease-in-out both;
             -o-animation: grow-fade-in 0.5s ease-in-out both;
             -webkit-animation: grow-fade-in 0.5s ease-in-out both;
             animation: grow-fade-in 0.5s ease-in-out both;
 
-            &:hover {
-                background: fade(#fff, 30%);
-                color: @color-secondary-foreground;
-            }
-
-            &.list-item-add {
-                width: @list-item-width * 2 - @list-item-spacing * 2;
-                color: @color-primary-special;
-            }
-
-            .list-item-content {
-                .vertical-align;
-
-                > .content {
-                    width: 100%;
-                    padding: 0 10px;
-                }
-            }
-
-            .name {
+            .list-item-container {
                 display: block;
-                font-weight: 600;
-                text-align: center;
+                .aspect-ratio(1, 1);
+
+                .list-item-content {
+                    display: block;
+                    .stretch-custom(5px);
+                    border-radius: 3px;
+                    font-weight: 600;
+                    text-align: center;
+                    color: @color-primary-foreground;
+                    background: @color-primary-background;
+                    -moz-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+                    -o-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+                    -webkit-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+                    transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+
+                    &:hover {
+                        background: fade(#fff, 30%);
+                        color: @color-secondary-foreground;
+                    }
+
+                    .list-item-text {
+                        display: block;
+                        .vertical-align;
+                    }
+                }
             }
         }
 
@@ -132,21 +154,21 @@ a {
             font-weight: 600;
             .slide-down-fade-in(0s);
         }
+    }
 
-        .loading-container {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
+    .loading-container {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
 
-            .loading-line {
-                position: relative;
-                max-width: 300px;
-                margin: 0 auto;
+        .loading-line {
+            position: relative;
+            max-width: 300px;
+            margin: 0 auto;
 
-                &:before {
-                    background: @color-primary-special;
-                }
+            &:before {
+                background: @color-primary-special;
             }
         }
     }

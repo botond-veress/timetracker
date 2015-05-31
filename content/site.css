@@ -134,7 +134,7 @@ textarea {
   vertical-align: middle;
   white-space: normal;
   background: none;
-  line-height: 1;
+  font: inherit;
 }
 input:focus,
 label:focus,
@@ -818,10 +818,21 @@ select[multiple] {
   transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out, visibility 0.25s ease-in-out;
   color: #ec3d68;
 }
+.control.secondary > .value {
+  background-image: -webkit-linear-gradient(to right, #ec3d68 33%, rgba(236, 61, 104, 0) 0);
+  background-image: -moz-linear-gradient(to right, #ec3d68 33%, rgba(236, 61, 104, 0) 0);
+  background-image: -ms-linear-gradient(to right, #ec3d68 33%, rgba(236, 61, 104, 0) 0);
+  background-image: -o-linear-gradient(to right, #ec3d68 33%, rgba(236, 61, 104, 0) 0);
+  background-image: linear-gradient(to right, #ec3d68 33%, rgba(236, 61, 104, 0) 0);
+}
+.control textarea.value {
+  min-height: 5em;
+}
 .control > .value {
   display: block;
   width: 100%;
   padding: 10px 0;
+  color: inherit;
   background-image: -webkit-linear-gradient(to right, #333333 33%, rgba(51, 51, 51, 0) 0);
   background-image: -moz-linear-gradient(to right, #333333 33%, rgba(51, 51, 51, 0) 0);
   background-image: -ms-linear-gradient(to right, #333333 33%, rgba(51, 51, 51, 0) 0);
@@ -831,6 +842,7 @@ select[multiple] {
   background-size: 4px 1px;
   background-repeat: repeat-x;
   text-align: inherit;
+  resize: vertical;
 }
 .control > .value ~ .error.message.visible {
   opacity: 1;
@@ -865,9 +877,11 @@ select[multiple] {
 }
 .control.checkbox > .item > .value {
   position: absolute;
-  /*opacity: 0;
-                display: none;*/
-  /*visibility: hidden;*/
+  top: 20px;
+  left: 0;
+  width: 0;
+  height: 0;
+  margin-top: 5px;
 }
 .control.checkbox > .item > .value:checked ~ .icon:before {
   background: #ec3d68;
@@ -879,7 +893,8 @@ select[multiple] {
   height: 13px;
   background: #fff;
   box-shadow: inset 0 0 0 1px #ec3d68;
-  vertical-align: top;
+  vertical-align: middle;
+  margin-top: -4px;
 }
 .control.checkbox > .item > .icon:before {
   content: '';
@@ -1535,11 +1550,30 @@ a {
 .page {
   max-width: 900px;
   margin: 0 auto;
+  padding: 0 10px;
 }
 .page .page-title {
+  position: relative;
   margin-bottom: 1em;
   font-size: 2em;
+  line-height: 2em;
   color: #fff;
+}
+.page .page-title .page-links {
+  font-size: 0.5em;
+  text-align: right;
+}
+.page .page-title .page-links .link {
+  position: relative;
+  padding: 0 5px;
+  margin-left: 5px;
+}
+.page .page-title .page-links .link:not(:first-child):before {
+  content: '|';
+  position: absolute;
+  right: 100%;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0.2;
 }
 .page .page-content {
   zoom: 1;
@@ -1552,34 +1586,46 @@ a {
 .page .page-content:after {
   clear: both;
 }
+.page .page-content .button.spacious {
+  margin-bottom: 20px;
+}
 .page .page-content .list-item {
   position: relative;
   float: left;
   display: block;
-  width: 140px;
-  height: 140px;
-  margin: 5px;
-  color: #333333;
-  background: #ffffff;
-  border-radius: 3px;
-  -moz-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
-  -o-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
-  -webkit-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
-  transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+  /*width: 25%;*/
   -moz-animation: grow-fade-in 0.5s ease-in-out both;
   -o-animation: grow-fade-in 0.5s ease-in-out both;
   -webkit-animation: grow-fade-in 0.5s ease-in-out both;
   animation: grow-fade-in 0.5s ease-in-out both;
 }
-.page .page-content .list-item:hover {
+.page .page-content .list-item .list-item-container {
+  display: block;
+  padding-bottom: 100%;
+}
+.page .page-content .list-item .list-item-container .list-item-content {
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 3px;
+  font-weight: 600;
+  text-align: center;
+  color: #333333;
+  background: #ffffff;
+  -moz-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+  -o-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+  -webkit-transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+  transition: background 0.25s ease-in-out, color 0.25s ease-in-out, border 0.25s ease-in-out;
+}
+.page .page-content .list-item .list-item-container .list-item-content:hover {
   background: rgba(255, 255, 255, 0.3);
   color: #ffffff;
 }
-.page .page-content .list-item.list-item-add {
-  width: 290px;
-  color: #ec3d68;
-}
-.page .page-content .list-item .list-item-content {
+.page .page-content .list-item .list-item-container .list-item-content .list-item-text {
+  display: block;
   height: 100%;
   text-align: center;
   white-space: nowrap;
@@ -1588,7 +1634,7 @@ a {
   -ms-user-select: none;
   user-select: none;
 }
-.page .page-content .list-item .list-item-content:before {
+.page .page-content .list-item .list-item-container .list-item-content .list-item-text:before {
   content: '';
   width: 0;
   height: 100%;
@@ -1596,7 +1642,7 @@ a {
   display: inline-block;
   vertical-align: middle;
 }
-.page .page-content .list-item .list-item-content > .content {
+.page .page-content .list-item .list-item-container .list-item-content .list-item-text > .content {
   position: relative;
   white-space: normal;
   text-align: left;
@@ -1607,15 +1653,6 @@ a {
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
-}
-.page .page-content .list-item .list-item-content > .content {
-  width: 100%;
-  padding: 0 10px;
-}
-.page .page-content .list-item .name {
-  display: block;
-  font-weight: 600;
-  text-align: center;
 }
 .page .page-content .list-message {
   background: #ffffff;
@@ -1632,18 +1669,18 @@ a {
   -webkit-animation: slide-down-fade-in 0.5s ease-in-out both 0s;
   animation: slide-down-fade-in 0.5s ease-in-out both 0s;
 }
-.page .page-content .loading-container {
+.page .loading-container {
   position: absolute;
   top: 50%;
   left: 0;
   right: 0;
 }
-.page .page-content .loading-container .loading-line {
+.page .loading-container .loading-line {
   position: relative;
   max-width: 300px;
   margin: 0 auto;
 }
-.page .page-content .loading-container .loading-line:before {
+.page .loading-container .loading-line:before {
   background: #ec3d68;
 }
 #applicationHost,

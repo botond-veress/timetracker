@@ -49,6 +49,26 @@
                     { id: 2, name: 'TriggerMail' },
                     { id: 3, name: 'Maurice Lacroix' }
                 ], false, 2000);
+            },
+            getClient: function (model) {
+                console.info('[API] GET /management/clients/detail', model);
+                return dummy({
+                    id: 1,
+                    name: 'Jet',
+                    projects: [
+                        { id: 1, name: 'Wolverine' },
+                        { id: 2, name: 'Ironman' },
+                        { id: 3, name: 'Nova' },
+                        { id: 4, name: 'Thor' },
+                        { id: 5, name: 'Superman' },
+                        { id: 6, name: 'Batman' },
+                        { id: 7, name: 'Gambit' }
+                    ]
+                }, false, 2000);
+            },
+            saveClient: function (model) {
+                console.info('[API] POST /management/clients/detail', model);
+                return dummy(null, false, 2000);
             }
         };
 

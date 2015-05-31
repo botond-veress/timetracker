@@ -1,6 +1,6 @@
 ﻿<header id="header" data-bind="css: { visible: navigationManager.claim.isAuthorized }">
     LOGO
-    <div class="header-navigation" data-bind="foreach: navigationManager.router.navigationModel">
+    <div class="header-navigation" data-bind="foreach: navigationManager.router.visibleNavigationModel">
         <a href="#" class="header-navigation-item" data-bind="text: title, attr: { href: hash }, css: { active: isActive }"></a>
     </div>
     <div class="header-user">

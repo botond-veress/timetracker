@@ -11,7 +11,7 @@
             self.title = options.title;
             self.nav = options.nav;
             self.hash = options.hash || null;
-            self.visible = options.visible;
+            self.hidden = options.hidden;
 
         }
 
@@ -31,7 +31,7 @@
             time: new Route({ route: 'time', moduleId: 'viewmodels/time', title: 'Personal Time Management', nav: true }),
             team: {
                 index: new Route({ route: 'team', moduleId: 'viewmodels/team', title: 'Team Management', nav: true }),
-                add: new Route({ route: 'team/client(/:id)', moduleId: 'viewmodels/team', hash: '#team/client', title: 'Team Management', nav: true })
+                add: new Route({ route: 'team/client(/:clientId)', moduleId: 'viewmodels/team/client', hash: '#team/client', title: 'Client', nav: true, hidden: true })
             }
         };
 
@@ -48,7 +48,8 @@
 
         var shellRoutes = [
             routes.time,
-            routes.team.index
+            routes.team.index,
+            routes.team.add
         ];
 
         var allRoutes = anonymousRoutes.slice().concat(shellRoutes);
@@ -163,6 +164,12 @@
                      console.error('Unknown route: ', instruction);
                  })
                  .buildNavigationModel();
+
+            router.visibleNavigationModel = router.visibleNavigationModel || ko.computed(function () {
+                return router.navigationModel().filter(function (current) {
+                    return !current.hidden;
+                });
+            });
 
             return router;
         }

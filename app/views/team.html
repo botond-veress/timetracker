@@ -1,27 +1,27 @@
 ﻿<div id="team" class="page">
-    <div class="page-title">Manage Clients</div>
+    <div class="page-title">
+        <div class="column-desktop-4">Manage Clients</div>
+        <div class="column-desktop-8 page-links">
+            <a href="#" class="link link-special" data-bind="attr: { href: hash.add }">Create new client</a>
+        </div>
+    </div>
     <div class="page-content">
         <div class="list" data-bind="with: entity, hidden: entity.loading">
-            <div class="list-message" data-bind="visible: list().length == 0">
+            <div class="list-message" data-bind="visible: clients().length == 0">
                 You didn't set up any client so far. You can add a client <a href="#" class="link link-special" data-bind="attr: { href: $parent.hash.add }">here</a>.
             </div>
-            <div data-bind="hidden: list().length == 0">
-                <a href="#" class="list-item list-item-add" data-bind="attr: { href: $parent.hash.add }">
-                    <span class="list-item-content">
-                        <span class="content">
-                            <span class="name">Add new client</span>
+            <div data-bind="foreach: clients, hidden: clients().length == 0">
+                <a href="#" class="list-item column-desktop-2 column-tablet-3 column-mobile-6" data-bind="attr: { href: hash }, style: { animationDelay: $index() / 10 + 's' }">
+                    <span class="list-item-container">
+                        <span class="list-item-content">
+                            <span class="list-item-text">
+                                <span class="content">
+                                    <span class="name" data-bind="text: name"></span>
+                                </span>
+                            </span>
                         </span>
                     </span>
                 </a>
-                <!-- ko foreach: list -->
-                <a href="#" class="list-item" data-bind="style: { animationDelay: $index() / 10 + 's' }">
-                    <span class="list-item-content">
-                        <span class="content">
-                            <span class="name" data-bind="text: name"></span>
-                        </span>
-                    </span>
-                </a>
-                <!-- /ko -->
             </div>
         </div>
         <div class="loading-container" data-bind="visible: entity.loading">

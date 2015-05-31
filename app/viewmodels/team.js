@@ -1,27 +1,5 @@
-﻿define(['services/datacontext', 'managers/navigationManager'],
-	function (datacontext, navigationManager) {
-
-	    function listClientItem(options) {
-
-	        options = options || {};
-
-	        var self = this;
-
-	        self.id = assignVariable(options.id || 0);
-	        self.name = assignVariable(options.name || 'Undefined client');
-	        self.hash = assignVariable(options.hash || null);
-
-	    }
-
-	    function listClient(options) {
-
-	        options = options || {};
-
-	        var self = this;
-
-	        self.list = assignArrayVariable(options.list || []);
-
-	    }
+﻿define(['services/datacontext', 'managers/navigationManager', 'models/management/listClient', 'models/management/listItemClient'],
+	function (datacontext, navigationManager, listClient, listItemClient) {
 
 	    var hash = {
 	        add: navigationManager.routes.team.add.hash
@@ -35,8 +13,9 @@
 	        datacontext.management.getClients()
                 .then(function (data) {
                     entity(new listClient({
-                        list: data.map(function (current) {
-                            return new listClientItem(current);
+                        clients: data.map(function (current) {
+                            current.hash = hash.add + '/' + current.id;
+                            return new listItemClient(current);
                         })
                     }));
                 })

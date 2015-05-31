@@ -49,15 +49,37 @@
         }
     }
 
+    .underline(@color) {
+        background-image: -webkit-linear-gradient(to right, @color 33%, fade(@color, 0) 0);
+        background-image: -moz-linear-gradient(to right, @color 33%, fade(@color, 0) 0);
+        background-image: -ms-linear-gradient(to right, @color 33%, fade(@color, 0) 0);
+        background-image: -o-linear-gradient(to right, @color 33%, fade(@color, 0) 0);
+        background-image: linear-gradient(to right, @color 33%, fade(@color, 0) 0);
+    }
+
+    &.secondary {
+        > .value {
+            .underline(@color-primary-special);
+        }
+    }
+
+    textarea {
+        &.value {
+            min-height: 5em;
+        }
+    }
+
     > .value {
         display: block;
         width: 100%;
         padding: 10px 0;
+        color: inherit;
         .underline(@color-primary-foreground);
         background-position: bottom;
         background-size: 4px 1px;
         background-repeat: repeat-x;
         text-align: inherit;
+        resize: vertical;
 
         ~ .error {
             &.message {
@@ -65,14 +87,6 @@
                     .label-visible;
                 }
             }
-        }
-
-        .underline(@color) {
-            background-image: -webkit-linear-gradient(to right, @color 33%, fade(@color, 0) 0);
-            background-image: -moz-linear-gradient(to right, @color 33%, fade(@color, 0) 0);
-            background-image: -ms-linear-gradient(to right, @color 33%, fade(@color, 0) 0);
-            background-image: -o-linear-gradient(to right, @color 33%, fade(@color, 0) 0);
-            background-image: linear-gradient(to right, @color 33%, fade(@color, 0) 0);
         }
 
         &:focus,
@@ -99,9 +113,12 @@
 
             > .value {
                 position: absolute;
-                /*opacity: 0;
-                display: none;*/
-                /*visibility: hidden;*/
+                top: 20px;
+                left: 0;
+                width: 0;
+                height: 0;
+                margin-top: 5px;
+
                 &:checked {
                     ~ .icon {
                         &:before {
@@ -118,7 +135,8 @@
                 height: 13px;
                 background: #fff;
                 box-shadow: inset 0 0 0 1px #ec3d68;
-                vertical-align: top;
+                vertical-align: middle;
+                margin-top: -4px;
 
                 &:before {
                     content: '';

@@ -10,6 +10,14 @@
     </div>
 </script>
 
+<script type="text/html" id="textarea-control-template">
+    <div class="control text" data-bind="css: css">
+        <textarea class="value" data-bind="value: value, valueUpdate: update(), attr: { placeholder: placeholder, readonly: readonly, type: type }"></textarea>
+        <div class="label" data-bind="text: label"></div>
+        <div class="template" data-bind="template: { if: template.src, name: template.src, data: template.params }"></div>
+    </div>
+</script>
+
 <script type="text/html" id="max-text-control-template">
     <div class="control text required">
         <input class="value" data-bind="value: value, valueUpdate: update(), attr: { placeholder: placeholder, readonly: readonly, type: type }" />
