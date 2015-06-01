@@ -1,6 +1,8 @@
 ﻿define(['helpers/configuration', 'services/mockupcontext'],
     function () {
 
+        //#region Polyfill - ECMA 6
+
         Array.prototype.find = function (predicate) {
             var array = this;
             for (var index in array) {
@@ -11,14 +13,9 @@
             return null;
         };
 
-        function guid() {
-            function s4() {
-                return Math.floor((1 + Math.random()) * 0x10000)
-                  .toString(16)
-                  .substring(1);
-            }
-            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-        }
+        //#endregion
+
+        //#region Underlaying data access
 
         function getArray(name) {
             var data = localStorage.getItem('mockup.' + name);
@@ -27,57 +24,6 @@
 
         function saveArray(name, array) {
             localStorage.setItem('mockup.' + name, JSON.stringify(array || []));
-        }
-
-        function getUsers() {
-            return getArray('users');
-        }
-
-        function saveUsers(array) {
-            return saveArray('users', array);
-        }
-
-        function getTokens() {
-            return getArray('tokens');
-        }
-
-        function saveTokens(array) {
-            return saveArray('tokens', array);
-        }
-
-        function getUserByCredentials(email, password) {
-            return getUsers().find(function (current) {
-                return current.email === email && current.password === password;
-            });
-        }
-
-        function getUserByEmail(email) {
-            return getUsers().find(function (current) {
-                return current.email === email;
-            });
-        }
-
-        function createToken(data) {
-            var tokens = getTokens();
-            tokens.push($.extend(data, {
-                token: guid()
-            }));
-            saveTokens(tokens);
-            return tokens[tokens.length - 1];
-        }
-
-        function createUser(data) {
-            var user = new UserEntity(data);
-            var users = getUsers();
-            users.push(user);
-            var token = createToken(new UserTokenEntity(user));
-            console.info('[API - TKN] Token (' + token.token + ') generated for user ' + user.email);
-            saveUsers(users);
-        }
-
-        function recoverUser(user) {
-            var token = createToken(new UserTokenEntity(user));
-            console.info('[API - TKN] Token (' + token.token + ') generated for user ' + user.email);
         }
 
         function updateArrayItem(name, predicate, callback) {
@@ -104,18 +50,86 @@
             return false;
         }
 
-        function updateUser(predicate, callback) {
-            return updateArrayItem('users', predicate, callback);
+        //#endregion
+
+        //#region Token related
+
+        function guid() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                  .toString(16)
+                  .substring(1);
+            }
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
         }
 
-        function removeToken(predicate) {
-            return removeArrayItem('tokens', predicate);
+        function getTokens() {
+            return getArray('tokens');
+        }
+
+        function saveTokens(array) {
+            return saveArray('tokens', array);
         }
 
         function getToken(token) {
             return getTokens().find(function (current) {
                 return current.token === token;
             });
+        }
+
+        function createToken(data) {
+            var tokens = getTokens();
+            tokens.push($.extend(data, {
+                token: guid()
+            }));
+            saveTokens(tokens);
+            return tokens[tokens.length - 1];
+        }
+
+        function removeToken(predicate) {
+            return removeArrayItem('tokens', predicate);
+        }
+
+        //#endregion
+
+        //#region User related
+
+        function getUsers() {
+            return getArray('users');
+        }
+
+        function saveUsers(array) {
+            return saveArray('users', array);
+        }
+
+        function updateUser(predicate, callback) {
+            return updateArrayItem('users', predicate, callback);
+        }
+
+        function getUserByCredentials(email, password) {
+            return getUsers().find(function (current) {
+                return current.email === email && current.password === password;
+            });
+        }
+
+        function getUserByEmail(email) {
+            return getUsers().find(function (current) {
+                return current.email === email;
+            });
+        }
+
+        function createUser(data) {
+            var user = new UserEntity(data);
+            var users = getUsers();
+            users.push(user);
+            var token = createToken(new UserTokenEntity(user));
+            console.info('[API - TKN] Token (' + token.token + ') generated for user ' + user.email);
+            saveUsers(users);
+        }
+
+        function recoverUser(user) {
+            var token = createToken(new UserTokenEntity(user));
+            console.info('[API - TKN] Token (' + token.token + ') generated for user ' + user.email);
         }
 
         function activateUser(token) {
@@ -140,6 +154,10 @@
             });
         }
 
+        //#endregion
+
+        //#region User entities
+
         function UserTokenEntity(options) {
 
             var self = this;
@@ -160,6 +178,8 @@
             self.activated = options.activated || false;
 
         }
+
+        //#endregion
 
         function handle(url, type, model) {
             console.info('[API - REQ] ' + type.toUpperCase() + ' ' + url, model);
