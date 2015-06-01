@@ -1,6 +1,6 @@
-﻿<div id="shell" data-bind="css: { authenticated: navigationManager.claim.isAuthorized }">
+﻿<div id="shell" class="scrollable" data-bind="css: { authenticated: navigationManager.claim.isAuthorized }">
     <!-- ko compose: { view: 'templates/controls' } --><!-- /ko -->
     <!-- ko compose: { model: 'viewmodels/header' } --><!-- /ko -->
-    <!-- ko router: { transition: 'fade' } --><!-- /ko -->
+    <!-- ko router: { transition: 'fade', cacheViews: false } --><!-- /ko -->
     <!-- ko compose: { view: 'footer' } --><!-- /ko -->
 </div>

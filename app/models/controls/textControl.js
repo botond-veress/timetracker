@@ -1,7 +1,7 @@
 ﻿define(['models/controls/control'],
     function (control) {
 
-        var model = function (options) {
+        var model = function TextControl(options) {
 
             options = options || {};;
 

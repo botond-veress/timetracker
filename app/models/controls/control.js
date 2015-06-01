@@ -1,7 +1,7 @@
 ﻿define(['models/unique', 'models/validated'],
     function (unique, validated) {
 
-        var model = function (options) {
+        var model = function Control(options) {
 
             options = options || {};
 
@@ -28,6 +28,9 @@
                 var css = 'text';
                 if (self.type() != css) {
                     css += ' ' + self.type();
+                }
+                if (options.css) {
+                    css += ' ' + ko.unwrap(options.css);
                 }
                 if (self.template.src()) {
                     css += ' templated';

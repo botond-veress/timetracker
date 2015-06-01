@@ -1,0 +1,98 @@
+﻿@import (reference) '_theme.less';
+@import (reference) '_core.less';
+
+#header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0 1em;
+    line-height: 3em;
+    opacity: 0;
+    visibility: hidden;
+    .clearfix;
+    -moz-transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, transform 0.25s ease-in-out;
+    -o-transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, transform 0.25s ease-in-out;
+    -webkit-transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, transform 0.25s ease-in-out;
+    transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, transform 0.25s ease-in-out;
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    .header-navigation {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+
+        .header-navigation-item {
+            position: relative;
+            display: inline-block;
+            padding: 0 15px;
+            color: @color-header-navigation-item;
+            white-space: nowrap;
+
+            &:not(:first-child) {
+                margin-left: 5px;
+
+                &:before {
+                    content: '|';
+                    position: absolute;
+                    top: 0;
+                    right: 100%;
+                    opacity: 0.2;
+                }
+            }
+
+            &.active {
+                color: @color-header-navigation-item-active;
+                cursor: default;
+            }
+
+            &:hover {
+                color: @color-header-navigation-item-hover;
+            }
+        }
+    }
+
+    .header-user {
+        position: relative;
+        float: right;
+        padding: 0 20px;
+        white-space: nowrap;
+        z-index: 1;
+
+        .header-user-name {
+        }
+
+        .header-user-signout {
+            margin-left: 1em;
+            text-transform: lowercase;
+
+            &:before {
+                content: '[ ';
+            }
+
+            &:after {
+                content: ' ]';
+            }
+        }
+    }
+}
+
+#footer {
+    display: none;
+}

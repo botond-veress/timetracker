@@ -1,0 +1,46 @@
+﻿<div id="project" class="page">
+    <div class="page-title">
+        <div class="row">
+            <div class="column-desktop-4">Project Details</div>
+            <div class="column-desktop-8 page-links">
+                <a href="#" class="link link-special" data-bind="attr: { href: hash.client }">Back to client</a>
+                <a href="#" class="link link-special" data-bind="attr: { href: hash.add }">Assign existing member</a>
+                <a href="#" class="link link-special" data-bind="attr: { href: hash.add }">Create new member</a>
+            </div>
+        </div>
+    </div>
+    <div class="page-content" data-bind="hidden: entity.loading">
+        <div class="row">
+            <div class="column-desktop-4">
+                <form role="form" class="form" data-bind="validate: { submit: submit, entity: entity }, with: entity" autocomplete="off" spellcheck="false" novalidate>
+                    <!-- ko template: { name: 'text-control-template', data: name } --><!-- /ko -->
+                    <!-- ko template: { name: 'textarea-control-template', data: description } --><!-- /ko -->
+                    <button type="submit" class="control spacious button button-large button-block button-primary" data-loading-text="Saving...">Save details</button>
+                </form>
+            </div>
+            <div class="column-desktop-8" data-bind="with: entity">
+                <div class="list">
+                    <div data-bind="foreach: users, hidden: users().length == 0">
+                        <a href="#" class="list-item column-desktop-4 column-tablet-3 column-mobile-6" data-bind="attr: { href: hash }, style: { animationDelay: $index() / 10 + 's' }">
+                            <span class="list-item-container">
+                                <span class="list-item-content">
+                                    <span class="list-item-text">
+                                        <span class="content">
+                                            <span class="name" data-bind="text: name"></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="list-message" data-bind="visible: users().length == 0">
+                        You didn't assign any team members to this project so far. You can <a href="#" class="link link-special" data-bind="attr: { href: $parent.hash.add }">assign an existing member</a> or <a href="#" class="link link-special">create one</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="loading-container" data-bind="visible: entity.loading">
+        <div class="loading-line loading-verbose" data-bind="attr: { title: entity.submitting() ? 'Saving project details...' : 'Retrieving project details...' }"></div>
+    </div>
+</div>
