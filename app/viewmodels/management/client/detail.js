@@ -2,8 +2,8 @@
 	function (datacontext, navigationManager, detailClient) {
 
 	    var hash = {
-	        add: navigationManager.routes.team.add.hash,
-	        clients: navigationManager.routes.team.index.hash,
+	        add: null,
+	        clients: navigationManager.routes.management.index.hash,
 	    };
 
 	    var entity = ko.observable().extend({ serializable: true });
@@ -21,11 +21,13 @@
 	    };
 
 	    function activate(id) {
+	        hash.add = null;
 	        if (id) {
 	            entity.loading(true);
 	            datacontext.management.getClient({ id: id })
                     .then(function (data) {
                         data.projects = data.projects || [];
+                        hash.add = navigationManager.routes.management.project.hash.replace(':clientId', id);
                         data.projects.forEach(function (current) {
                             current.hash = hash.add + '/' + current.id
                         });

@@ -2,7 +2,7 @@
 	function (datacontext, navigationManager, listClient, listItemClient) {
 
 	    var hash = {
-	        add: navigationManager.routes.team.add.hash
+	        add: navigationManager.routes.management.client.hash
 	    };
 
 	    var entity = ko.observable(new listClient()).extend({ serializable: true });

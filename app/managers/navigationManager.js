@@ -19,9 +19,9 @@
             login: new Route({ route: 'login', moduleId: 'viewmodels/account/login', title: 'Login', nav: true }),
             recover: {
                 index: new Route({ route: 'recover', moduleId: 'viewmodels/account/recover', title: 'Recover your account', nav: true }),
-                confirm: new Route({ route: 'recover/confirm', moduleId: 'viewmodels/account/recover/confirm', title: 'Email confirmation', nav: true })
+                confirm: new Route({ route: 'recover/confirm', moduleId: 'viewmodels/account/recover/confirm', title: 'Email confirmation', nav: true }),
+                reset: new Route({ route: 'recover/reset', moduleId: 'viewmodels/account/recover/reset', title: 'Reset your password', nav: true })
             },
-            reset: new Route({ route: 'reset', moduleId: 'viewmodels/account/reset', title: 'Reset your password', nav: true }),
             register: {
                 index: new Route({ route: 'register', moduleId: 'viewmodels/account/register', title: 'Join us', nav: true }),
                 confirm: new Route({ route: 'register/confirm', moduleId: 'viewmodels/account/register/confirm', title: 'Join us', nav: true }),
@@ -29,9 +29,11 @@
             },
             home: new Route({ route: 'home', moduleId: 'viewmodels/home', title: 'Home', nav: true }),
             time: new Route({ route: 'time', moduleId: 'viewmodels/time', title: 'Personal Time Management', nav: true }),
-            team: {
-                index: new Route({ route: 'team', moduleId: 'viewmodels/team', title: 'Team Management', nav: true }),
-                add: new Route({ route: 'team/client(/:clientId)', moduleId: 'viewmodels/team/client', hash: '#team/client', title: 'Client', nav: true, hidden: true })
+            management: {
+                index: new Route({ route: 'management*details', moduleId: 'viewmodels/management', hash: '#management', title: 'Team Management', nav: true }),
+                clients: new Route({ route: ['management', 'management/clients'], moduleId: 'viewmodels/management/client/list', hash: '#management/clients', title: 'Client Management', nav: true }),
+                client: new Route({ route: 'management/client(/:clientId)', moduleId: 'viewmodels/management/client/detail', hash: '#management/client', title: 'Client Details', nav: true }),
+                project: new Route({ route: 'management/client/:clientId/project(/:projectId)', moduleId: 'viewmodels/management/project/detail', hash: '#management/client/:clientId/project', title: 'Project Details', nav: true })
             }
         };
 
@@ -39,7 +41,7 @@
             routes.login,
             routes.recover.index,
             routes.recover.confirm,
-            routes.reset,
+            routes.recover.reset,
             routes.register.index,
             routes.register.confirm,
             routes.register.activate,
@@ -48,8 +50,13 @@
 
         var shellRoutes = [
             routes.time,
-            routes.team.index,
-            routes.team.add
+            routes.management.index
+        ];
+
+        var managementRoutes = [
+            routes.management.clients,
+            routes.management.client,
+            routes.management.project
         ];
 
         var allRoutes = anonymousRoutes.slice().concat(shellRoutes);
@@ -57,7 +64,9 @@
         var claim = ko.observable(null).extend({ serializable: true });
         claim.isAuthorized = ko.computed(function () {
             var claim = this();
-            return !!claim && !!claim.token();
+            var isAuthorized = !!claim && !!claim.token();
+            datacontext.setToken(isAuthorized ? claim.token() : null);
+            return isAuthorized;
         }, claim);
         claim.isAuthorized.subscribe(buildShellRoutes);
 
@@ -66,6 +75,7 @@
             router: router,
             claim: claim,
             buildShellRoutes: buildShellRoutes,
+            buildManagementRoutes: buildManagementRoutes,
 
             initialize: initialize,
             authenticate: authenticate,
@@ -83,28 +93,28 @@
 
         function authenticate(model, remember, url) {
             return datacontext.account.authenticate(model)
-                 .then(function (data) {
-                     data.remember = remember;
-                     claim(new tokenAccount(data));
-                     if (claim().remember()) {
-                         save(claim.serialize());
-                     }
-                     router.navigate(routeExists(shellRoutes, url) ? url : shellRoutes[0].hash);
-                 });
+            .then(function (data) {
+                data.remember = remember;
+                claim(new tokenAccount(data));
+                if (claim().remember()) {
+                    save(claim.serialize());
+                }
+                router.navigate(routeExists(shellRoutes, url) ? url : shellRoutes[0].hash);
+            });
         }
 
         function signout() {
             return datacontext.account.signout()
-                 .then(function () {
-                     if (!!claim()) {
-                         claim().token(null);
-                         router.navigate(anonymousRoutes[0].hash);
-                         if (!claim().remember()) {
-                             claim(null);
-                         }
-                         save(claim.serialize());
-                     }
-                 });
+            .then(function () {
+                if (!!claim()) {
+                    claim().token(null);
+                    router.navigate(anonymousRoutes[0].hash);
+                    if (!claim().remember()) {
+                        claim(null);
+                    }
+                    save(claim.serialize());
+                }
+            });
         }
 
         //#endregion
@@ -133,6 +143,10 @@
             return buildRoutes(router, allRoutes, claim.isAuthorized() ? shellRoutes[0].hash : anonymousRoutes[0].hash);
         }
 
+        function buildManagementRoutes() {
+            return buildRoutes(router.createChildRouter(), managementRoutes, managementRoutes[0]);
+        }
+
         function buildRoutes(router, mappings, initial) {
             router.reset();
 
@@ -159,11 +173,12 @@
                 return guard;
             };
 
-            router.map(mappings)
-                 .mapUnknownRoutes(function (instruction) {
-                     console.error('Unknown route: ', instruction);
-                 })
-                 .buildNavigationModel();
+            router
+                .map(mappings)
+                .mapUnknownRoutes(function (instruction) {
+                    console.error('Unknown route: ', instruction);
+                })
+                .buildNavigationModel();
 
             router.visibleNavigationModel = router.visibleNavigationModel || ko.computed(function () {
                 return router.navigationModel().filter(function (current) {
@@ -197,5 +212,4 @@
         }
 
         //#endregion
-    }
-);
+    });
