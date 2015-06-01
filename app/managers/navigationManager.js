@@ -30,10 +30,10 @@
             home: new Route({ route: 'home', moduleId: 'viewmodels/home', title: 'Home', nav: true }),
             time: new Route({ route: 'time', moduleId: 'viewmodels/time', title: 'Personal Time Management', nav: true }),
             management: {
-                index: new Route({ route: 'management*details', moduleId: 'viewmodels/management', hash: '#management', title: 'Team Management', nav: true }),
-                clients: new Route({ route: ['management', 'management/clients'], moduleId: 'viewmodels/management/client/list', hash: '#management/clients', title: 'Client Management', nav: true }),
-                client: new Route({ route: 'management/client(/:clientId)', moduleId: 'viewmodels/management/client/detail', hash: '#management/client', title: 'Client Details', nav: true }),
-                project: new Route({ route: 'management/client/:clientId/project(/:projectId)', moduleId: 'viewmodels/management/project/detail', hash: '#management/client/:clientId/project', title: 'Project Details', nav: true })
+                index: new Route({ route: 'management*details', moduleId: 'viewmodels/management', hash: 'management', title: 'Team Management', nav: true }),
+                clients: new Route({ route: ['management', 'management/clients'], moduleId: 'viewmodels/management/client/list', hash: 'management/clients', title: 'Client Management', nav: true }),
+                client: new Route({ route: 'management/client(/:clientId)', moduleId: 'viewmodels/management/client/detail', hash: 'management/client', title: 'Client Details', nav: true }),
+                project: new Route({ route: 'management/client/:clientId/project(/:projectId)', moduleId: 'viewmodels/management/project/detail', hash: 'management/client/:clientId/project', title: 'Project Details', nav: true })
             }
         };
 

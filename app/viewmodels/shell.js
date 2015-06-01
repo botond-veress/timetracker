@@ -3,7 +3,9 @@
 
         function activate() {
             navigationManager.initialize();
-            return navigationManager.buildShellRoutes().activate();
+            return navigationManager.buildShellRoutes().activate({
+                pushState : true
+            });
         }
 
         var vm = {
