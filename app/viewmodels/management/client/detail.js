@@ -4,6 +4,7 @@
 	    var hash = {
 	        add: null,
 	        clients: navigationManager.routes.management.index.hash,
+	        detail: navigationManager.routes.management.client.hash
 	    };
 
 	    var entity = ko.observable().extend({ serializable: true });
@@ -23,6 +24,7 @@
 	    function activate(id) {
 	        hash.add = null;
 	        if (id) {
+	            console.log('---- LOAD', id);
 	            entity.loading(true);
 	            datacontext.management.getClient({ id: id })
                     .then(function (data) {
@@ -45,7 +47,12 @@
 
 	    function submit() {
 	        entity.submitting(true);
+	        console.log('----', entity.serialize());
 	        return datacontext.management.saveClient(entity.serialize())
+                .then(function (data) {
+                    entity().id(data.id);
+                    navigationManager.router.navigate(hash.detail + '/' + data.id, { replace: true });
+                })
                 .always(function () {
                     entity.submitting(false);
                 });
