@@ -7,10 +7,10 @@
 
             var self = this;
 
-            self.id = ko.observable(options.id);
+            self.id = ko.observable(options.id).extend({ serializable: true });
             self.name = new textControl({ label: 'Name', placeholder: 'Company Next Door Inc.', value: options.name, css: 'secondary', validation: { required: { message: 'Required' } }, serializable: true });
             self.description = new textControl({ label: 'Description', placeholder: 'Some description about the client', value: options.description, css: 'secondary', validation: { maxLength: { params: 255, message: 'Too long' } }, serializable: true });
-            self.projects = assignArrayVariable(options.projects || []);
+            self.projects = assignArrayVariable(options.projects || []).extend({ serializable: true });
 
             entity.call(self, options);
             serializable.call(self);
